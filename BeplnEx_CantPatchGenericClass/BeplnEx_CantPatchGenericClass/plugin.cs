@@ -32,6 +32,7 @@ public static class TestPatch
 {
     public static bool Prefix(DestroyableSingleton<HudManager> __instance)
     {
+        BeplnExPlugin.Logger.LogInfo("Called!!");
         return true;
     }
 }
