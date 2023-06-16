@@ -4,6 +4,7 @@ using BepInEx.Unity.IL2CPP;
 
 using HarmonyLib;
 
+using Innersloth.Assets;
 
 namespace IssueProject;
 
@@ -24,13 +25,10 @@ public partial class BeplnExPlugin : BasePlugin
     }
 }
 
-[HarmonyPatch(
-    typeof(DestroyableSingleton<HudManager>),
-    nameof(DestroyableSingleton<HudManager>.Instance),
-    MethodType.Getter)]
-public static class TestPatch
+[HarmonyPatch(typeof(AddressableAsset<HatViewData>), nameof(AddressableAsset<HatViewData>.GetAsset))]
+public static class HAddressableAssetGetAssetPatch
 {
-    public static bool Prefix(DestroyableSingleton<HudManager> __instance)
+    public static bool Prefix(HatViewData __result)
     {
         BeplnExPlugin.Logger.LogInfo("Called!!");
         return true;
