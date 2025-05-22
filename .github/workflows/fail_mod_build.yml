@@ -1,0 +1,25 @@
+name: build
+
+
+on:
+  workflow_dispatch:
+
+jobs:
+  packing:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: SetupNuget
+        uses: nuget/setup-nuget@v2
+      - name: RestoreNugetPackage
+        run: nuget restore AmongUs_MsBuild/Sample.sln
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x
+      - name: AddMsBuildToPATH
+        uses: microsoft/setup-msbuild@v2
+      - name: build
+        run: msbuild AmongUs_MsBuild/Sample.sln
